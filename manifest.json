@@ -1,0 +1,11 @@
+{
+  "name": "RUNTEQ event to goole calendar",
+  "description": "RUNTEQのイベントをGoogleカレンダーに登録しやすくするための拡張機能です。",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}

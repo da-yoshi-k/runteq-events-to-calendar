@@ -1,0 +1,18 @@
+.container {
+  width: 400px;
+  height: 350px;
+  background-color: #f4f9fa;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.inner {
+  width: 80%;
+  height: 80%;
+  background-color: white;
+  padding: 10px;
+  margin: auto;
+}
+
