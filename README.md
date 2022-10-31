@@ -2,7 +2,7 @@
 
 ## 概要
 
-RUNTEQ のイベントの情報を Google カレンダーに登録するアプリです。
+RUNTEQ のイベントの情報を Google カレンダーに登録するGoogle　Chrome用の拡張機能です。
 
 ---
 
