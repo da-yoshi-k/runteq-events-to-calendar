@@ -26,7 +26,6 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
 
 document.getElementById("addBtn").addEventListener("click", async () => {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  console.log("test");
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     function: onRun,
