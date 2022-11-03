@@ -2,7 +2,7 @@
 
 ## 概要
 
-RUNTEQ のイベントの情報を Google カレンダーに登録するGoogle　Chrome用の拡張機能です。
+RUNTEQ のイベントの情報を Google カレンダーに登録する Google 　 Chrome 用の拡張機能です。
 
 ---
 
@@ -29,7 +29,7 @@ $ git clone https://github.com/da-yoshi-k/runteq-events-to-calendar.git
 
 1. カレンダーに登録したい RUNTEQ のイベントページを開きます。
 
-2. 拡張機能のアイコンをクリックします。
+2. 拡張機能のアイコンをクリックします。（Ctrl+Shift+U でも起動可）
 
 3. 「Google カレンダーに追加する」ボタンをクリックします。
 
