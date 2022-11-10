@@ -2,13 +2,39 @@ const eventUrlPattern = new RegExp(
   /^https:\/\/school\.runteq\.jp\/v[0-9]\/runteq_events\/[0-9]{3,6}/
 );
 
+const consultationUrlPattern = new RegExp(
+  /^https:\/\/school\.runteq\.jp\/v[0-9]\/mypage\/consultation_reservations/
+);
+
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-  const url = tabs[0].url;
-  if (!eventUrlPattern.test(url)) {
+  if (eventUrlPattern.test(tabs[0].url)) {
+    showEventInfo(tabs);
+  } else if (consultationUrlPattern.test(tabs[0].url)) {
+    showConsultationsInfo(tabs);
+  } else {
     document.getElementById("results").innerText = "無効なURLです";
     document.getElementById("addBtn").setAttribute("disabled", true);
     return;
   }
+});
+
+document.getElementById("addBtn").addEventListener("click", async () => {
+  await chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+    if (eventUrlPattern.test(tabs[0].url)) {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        function: addEventToCalendar,
+      });
+    } else if (consultationUrlPattern.test(tabs[0].url)) {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        function: addEventToCalendar,
+      });
+    }
+  });
+});
+
+function showEventInfo(tabs) {
   chrome.scripting.executeScript(
     {
       target: { tabId: tabs[0].id },
@@ -22,15 +48,7 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
       document.getElementById("results").innerHTML = imgHTML;
     }
   );
-});
-
-document.getElementById("addBtn").addEventListener("click", async () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: onRun,
-  });
-});
+}
 
 function getEventImage() {
   try {
@@ -43,7 +61,31 @@ function getEventImage() {
   }
 }
 
-function onRun() {
+function showConsultationsInfo(tabs) {
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: tabs[0].id },
+      function: getConsultationsInfo,
+    },
+    (result) => {
+      let HTML = "";
+      result[0].result
+        ? (imgHTML = `<img src=${result[0].result} width="280">`)
+        : (HTML = `<div>イベント画像なし</div>`);
+      document.getElementById("results").innerHTML = imgHTML;
+    }
+  );
+}
+
+function getConsultationsInfo() {
+  try {
+    return;
+  } catch {
+    return "";
+  }
+}
+
+function addEventToCalendar() {
   const title = document.querySelector(".userEventDetail_sideTitle").innerText;
   const eventURL = window.location.href.split("?")[0];
   // 'YYYY年MM月DD日(X) hh:mm〜hh:mm'の形式を想定
@@ -58,3 +100,5 @@ function onRun() {
   const linkUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=${eventURL}&location=オンライン&trp=false`;
   window.open(linkUrl, "_blank");
 }
+
+function addConsultationToCalendar() {}
