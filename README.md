@@ -34,3 +34,10 @@ $ git clone https://github.com/da-yoshi-k/runteq-events-to-calendar.git
 3. 「Googleカレンダーに追加する」ボタンをクリックします。
 
 4. 遷移後のGoogleカレンダーのページで内容を確認し、予定を登録します。
+
+
+---
+
+## 関連記事
+
+[Google Chrome拡張を作成してGoogleカレンダー連携機能を自ら生み出す話](https://qiita.com/da-yoshi-k/items/11bec355b089c89b5be6)
