@@ -3,7 +3,7 @@ const eventUrlPattern = new RegExp(
 );
 
 const consultationUrlPattern = new RegExp(
-  /^https:\/\/school\.runteq\.jp\/v[0-9]\/mypage\/consultation_reservations/
+  /^https:\/\/school\.runteq\.jp\/v[0-9]\/mypage\/consultation_reservations\/[0-9]{2,10}/
 );
 
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -28,7 +28,7 @@ document.getElementById("addBtn").addEventListener("click", async () => {
     } else if (consultationUrlPattern.test(tabs[0].url)) {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id },
-        function: addEventToCalendar,
+        function: addConsultationToCalendar,
       });
     }
   });
@@ -68,18 +68,25 @@ function showConsultationsInfo(tabs) {
       function: getConsultationsInfo,
     },
     (result) => {
-      let HTML = "";
+      let textHTML = "";
       result[0].result
-        ? (imgHTML = `<img src=${result[0].result} width="280">`)
-        : (HTML = `<div>イベント画像なし</div>`);
-      document.getElementById("results").innerHTML = imgHTML;
+        ? (textHTML = `<div>日時：${result[0].result.date}</div><br><div>種別：${result[0].result.category}</div>`)
+        : (textHTML = `<div>面談情報なし</div>`);
+      document.getElementById("results").innerHTML = textHTML;
     }
   );
 }
 
 function getConsultationsInfo() {
   try {
-    return;
+    let consultation = {
+      date: "",
+      category: "",
+    };
+    const reservationTable = document.querySelector(".card-body > table");
+    consultation.date = reservationTable.rows[0].cells[1].innerText;
+    consultation.category = reservationTable.rows[1].cells[1].innerText;
+    return consultation;
   } catch {
     return "";
   }
@@ -101,4 +108,18 @@ function addEventToCalendar() {
   window.open(linkUrl, "_blank");
 }
 
-function addConsultationToCalendar() {}
+function addConsultationToCalendar() {
+  const reservationTable = document.querySelector(".card-body > table");
+  // 'YYYY/MM/DD hh:mm〜hh:mm'の形式を想定
+  const dates = reservationTable.rows[0].cells[1].innerText.split(" ");
+  const date = dates[0].replace(/\D/g, "");
+  const startTime = dates[1].split("〜")[0].replace(":", "");
+  const endTime = dates[1].split("〜")[1].replace(":", "");
+  const startDate = `${date}T${startTime}00`;
+  const endDate = `${date}T${endTime}00`;
+  const title = reservationTable.rows[1].cells[1].innerText;
+  const reservationURL = window.location.href.split("?")[0];
+  const url = reservationTable.rows[2].cells[1].innerText;
+  const linkUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&details=予約詳細ページ%0D%0A${reservationURL}%0D%0A面談URL%0D%0A${url}&location=オンライン&trp=false`;
+  window.open(linkUrl, "_blank");
+}
