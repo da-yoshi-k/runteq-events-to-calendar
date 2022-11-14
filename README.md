@@ -1,8 +1,8 @@
-# RUNTEQ イベント登録アプリ
+# RUNTEQイベント登録アプリ
 
 ## 概要
 
-RUNTEQ のイベントの情報を Google カレンダーに登録する Google 　 Chrome 用の拡張機能です。
+RUNTEQのイベント、または面談予約の情報をGoogleカレンダーに登録しやすくするためのGoogle　Chrome用の拡張機能です。
 
 ---
 
@@ -15,9 +15,9 @@ $ cd "インストール先のディレクトリ"
 $ git clone https://github.com/da-yoshi-k/runteq-events-to-calendar.git
 ```
 
-2. Chrome 上で「chrome://extensions」にアクセスします。
+2. Chrome上で「chrome://extensions」にアクセスします。
 
-3. 「デベロッパーモード」を ON にします。
+3. 「デベロッパーモード」をONにします。
 
 4. 「パッケージ化されていない拡張機能を読み込む」を押下し、1.でインストールしたディレクトリを選択します。
 
@@ -27,10 +27,10 @@ $ git clone https://github.com/da-yoshi-k/runteq-events-to-calendar.git
 
 <img src="https://i.gyazo.com/2541d95eee7e92d60935fabbe7d3c798.gif" width="500px">
 
-1. カレンダーに登録したい RUNTEQ のイベントページを開きます。
+1. カレンダーに登録したいRUNTEQのイベントページ(または面談予約詳細ページ)を開きます。
 
-2. 拡張機能のアイコンをクリックします。（Ctrl+Shift+U でも起動可）
+2. 拡張機能のアイコンをクリックします。（Ctrl+Shift+Uでも起動可）
 
-3. 「Google カレンダーに追加する」ボタンをクリックします。
+3. 「Googleカレンダーに追加する」ボタンをクリックします。
 
-4. Google カレンダーのページで内容を確認し予定を登録します。
+4. 遷移後のGoogleカレンダーのページで内容を確認し、予定を登録します。
